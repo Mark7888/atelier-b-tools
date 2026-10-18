@@ -72,3 +72,22 @@ syncABWS-2404.bat
 ----
 
 Run `initABWS-2404.bat` from an empty directory. It prompts for the installation directory and creates `bdb`, `Archives`, and the `AtelierB` configuration file. Its prompt does not set `ATELIERB_PATH` in the parent Command Prompt; set that variable separately before using the other two batch files.
+
+== macOS scripts
+
+The macOS versions are `initABWS-2404-macos.sh`, `startBB-2404-macos.sh`, and `syncABWS-2404-macos.sh`. They work the same way as the Linux scripts and run with the bash and command-line tools that ship with macOS. Put them together in a directory on `PATH` (the sync script also finds `startBB-2404-macos.sh` beside itself).
+
+Differences from the Linux scripts:
+
+* The Atelier B installation is found automatically in `/Applications`, `~/Applications`, or `/opt/atelierb*`. Both a plain installation folder and a `.app` bundle work. If it is somewhere else, set `ATELIERB_PATH`:
++
+[source,sh]
+----
+export ATELIERB_PATH="/Applications/AtelierB-free-24.04.2.app"
+startBB-2404-macos.sh
+syncABWS-2404-macos.sh
+----
+* `initABWS-2404-macos.sh` offers the detected installation as the default answer, and ignores a `.DS_Store` file when checking that the directory is empty.
+* `startBB-2404-macos.sh` sets `DYLD_LIBRARY_PATH` (the macOS equivalent of `LD_LIBRARY_PATH`).
+
+If macOS blocks `bbatch` because it was downloaded from the internet, allow it in *System Settings > Privacy & Security*, or remove the quarantine flag with `xattr -dr com.apple.quarantine <installation path>`.
